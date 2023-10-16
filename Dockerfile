@@ -9,7 +9,7 @@ RUN apt-get update -qy && \
         libsasl2-dev \
         slapd \
         ldap-utils \
-        python-tox \
+        tox \
         lcov \
         valgrind \
     && \
