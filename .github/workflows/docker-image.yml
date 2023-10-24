@@ -60,5 +60,5 @@ jobs:
             DEBIAN_VERSION=${{ matrix.debian_version }}
             PYTHON_VERSION=${{ matrix.python_version }}
           platforms: linux/amd64
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.python_version }}-${{ matrix.debian_version }}"
           labels: ${{ steps.meta.outputs.labels }}
