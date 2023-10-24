@@ -12,6 +12,20 @@ env:
 
 jobs:
   build-and-push-image:
+    strategy:
+      matrix:
+        python_version:
+          - 3.7
+          - 3.9
+          - 3.11
+          - 3.12
+        debian_version:
+          - buster
+          - bullseye
+          - bookworm
+        exclude:
+          - debian_version: buster
+            python_version: 3.12
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -20,9 +34,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -45,6 +56,8 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm64
+          build-args: |
+            DEBIAN_VERSION=${{ matrix.debian_version }}
+          platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

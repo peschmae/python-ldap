@@ -1,4 +1,6 @@
-FROM python:3.12-bookworm
+ARG DEBIAN_VERSION=buster
+ARG PYTHON_VERSION=3.7
+FROM python:${PYTHON_VERSION}-${DEBIAN_VERSION}}
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qy && \
